@@ -68,8 +68,8 @@ steps:
         hub config --global hub.protocol https
         hub config --global user.email "$${ACTIVE_ACCOUNT}"
         hub config --global user.name "Google Container Builder"
-        hub clone "${_GITHUB_USERNAME}/palm-infrastructure-staging"
-        cd palm-infrastructure-staging
+        hub clone "${_GITHUB_USERNAME}/Palm-infrastructure-staging"
+        cd Palm-infrastructure-staging
         cat <<EOF > patch.yaml
         spec:
           template:
