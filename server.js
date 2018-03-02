@@ -5,7 +5,7 @@ var handler = createHandler({ path: '/webhook', secret: 'myhashsecret' })
 http.createServer(function (req, res) {
   handler(req, res, function (err) {
     res.statusCode = 404
-    res.end('Hello there')
+    res.end('Hello there!')
   })
 
 }).listen(8080)
