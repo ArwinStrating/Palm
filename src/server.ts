@@ -1,23 +1,30 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import { issues } from './middlewares/issues';
 
 const app = express();
 
 app.use(bodyParser.json());
 
+app.use(issues, 
+  function (req, res, next) {
+    res.status(200).end();
+  }
+);
+
 app.post('/webhook', function(req, res) {
-  // Only respond to github push events
+
   if (req.headers['x-github-event'] != 'issues') return res.status(200).end();
 
-  const payload = req.body
-    , repo    = payload.repository.name
+  // const payload = req.body
+  //   , repo    = payload.repository.name
 
-  res.send('Received issue ' + payload.action + ' event for repo: ' + repo);
+  // res.send('Received issue ' + payload.action + ' event for repo: ' + repo);
 });
 
-app.listen(8080);
-
-console.log('server listening on port 8080');
+app.listen(8080, () => {
+  console.log('server listening on port 8080');
+});
 
 // handler.on('error', function (err) {
 //   console.error('Error:', err.message)
