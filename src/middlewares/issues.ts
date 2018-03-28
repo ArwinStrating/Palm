@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 import { Issue } from '../models/issue'
 import { db } from '../db';
 
@@ -14,7 +16,10 @@ export function issues(req, res, next) {
         "description": "COMMIT",
         "game": "c4lUBr3vo4onHKBQIOJh",
         "score": 1,
-        "time": new Date()
+        "time": new Date(),
+        "dayKey": moment().format('YYYYMMDD'),
+        "monthKey": moment().format('YYYYMM'),
+        "weekKey": moment().format('YYYY') + ('0' + moment().isoWeek()).slice(-2),
       }
     ).then( () => console.log('Succesfully written new document'))
     .catch( () => console.log('Error writing new document'))
