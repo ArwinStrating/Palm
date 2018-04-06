@@ -13,10 +13,10 @@ export function issues(req, res, next) {
       {
         "player": "rH9puJCsOYcJtAue9VhD8K8SxY83",
         "category": "GITHUB",
-        "description": "COMMIT",
+        "description": "ISSUE",
         "game": "c4lUBr3vo4onHKBQIOJh",
         "score": 1,
-        "time": new Date()
+        "time": moment().toISOString()              
       }
     ).then( () => console.log('Succesfully written new document'))
     .catch( () => console.log('Error writing new document'))

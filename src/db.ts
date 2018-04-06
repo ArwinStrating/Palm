@@ -8,5 +8,7 @@ const config = {
     storageBucket: "m4m-code-heroes-dev.appspot.com",
     projectId: "m4m-code-heroes-dev"
 };
+
 firebase.initializeApp(config);
+
 export const db = firebase.firestore();
