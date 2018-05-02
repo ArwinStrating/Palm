@@ -15,8 +15,13 @@ require('dotenv').config();
 // const serviceAccount = require(process.env.SERVICE_ACCOUNT);
 const serviceAccount = require('../src/config.json');
 
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://m4m-code-heroes-dw.firebaseio.com"
+// });
+
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.applicationDefault(),
   databaseURL: "https://m4m-code-heroes-dw.firebaseio.com"
 });
 
