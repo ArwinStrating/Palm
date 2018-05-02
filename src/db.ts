@@ -1,14 +1,23 @@
-import * as firebase from "firebase";
-import 'firebase/firestore'
+import * as admin from "firebase-admin";
+import * as adminDup from "firebase-admin";
 
-const config = {
-    apiKey: "AIzaSyDz3ZjOqctGGTCz-sZj_eq924vSMen2QN4",
-    authDomain: "m4m-code-heroes-dev.firebaseapp.com",
-    databaseURL: "https://m4m-code-heroes-dev.firebaseio.com",
-    storageBucket: "m4m-code-heroes-dev.appspot.com",
-    projectId: "m4m-code-heroes-dev"
-};
+require('dotenv').config();
 
-firebase.initializeApp(config);
+// var config = {
+//     "apiKey": "AIzaSyDm67BHbyWAIo-BYE5xcpkj97iji6m6dvU",
+//     "authDomain": "m4m-code-heroes-dw.firebaseapp.com",
+//     "databaseURL": "https://m4m-code-heroes-dw.firebaseio.com",
+//     "projectId": "m4m-code-heroes-dw",
+//     "storageBucket": "m4m-code-heroes-dw.appspot.com",
+//     "messagingSenderId": "281814238847"
+// }
 
-export const db = firebase.firestore();
+// const serviceAccount = require(process.env.SERVICE_ACCOUNT);
+const serviceAccount = require('../src/config.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://m4m-code-heroes-dw.firebaseio.com"
+});
+
+export const db = admin.firestore();

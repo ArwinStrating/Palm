@@ -1,12 +1,20 @@
+import { Committer } from '../models/committer'
+
 export class Commit {
     id: string;
     message: string;
+    committer: Committer;
+    distinct: boolean;
+    timestamp: Date;
     modified: string[];
     added: string[];
     removed: string[];
 
     constructor(commit?: Commit) {
         this.id = commit.id;
+        this.committer = commit.committer;
+        this.timestamp = commit.timestamp;
+        this.distinct = commit.distinct;
         this.added = commit.added;
         this.message = commit.message;
         this.modified = commit.modified;
@@ -17,6 +25,9 @@ export class Commit {
         class Builder {
             id;
             message;
+            committer;
+            distinct;
+            timestamp;
             modified;
             added;
             removed;
@@ -25,6 +36,18 @@ export class Commit {
             }
             withMessage(message) {
                 this.message = message;
+                return this;
+            }
+            withCommitter(committer) {
+                this.committer = committer;
+                return this;
+            }
+            withTimestamp(timestamp) {
+                this.timestamp = timestamp;
+                return this;
+            }
+            withDistinct(distinct) {
+                this.distinct = distinct;
                 return this;
             }
             withModified(modified) {
