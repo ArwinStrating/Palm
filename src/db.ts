@@ -13,7 +13,7 @@ require('dotenv').config();
 // }
 
 // const serviceAccount = require(process.env.SERVICE_ACCOUNT);
-const serviceAccount = require('../src/config.json');
+// const serviceAccount = require('../src/config.json');
 
 // admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount),
