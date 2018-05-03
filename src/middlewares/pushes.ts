@@ -31,26 +31,26 @@ export function pushes(req, res, next) {
     push.repository = req.body.repository.name;
     push.commits = commits;
 
-    for(const commit of push.commits) {
-      if (commit.distinct) {
-        db.collection('data').doc('github').collection('commits').doc(commit.id).set(
-          {
-            "_meta": {
-              "project": push.repository,
-              "user": commit.committer.username
-            },
-            "commitId": commit.id,
-            "commitMessage": commit.message,
-            "distinct": commit.distinct,
-            "time": commit.timestamp,
-            "modified" : commit.modified,
-            "removed": commit.removed,
-            "added": commit.added
-          }
-        ).then( () => console.log('Succesfully written new document'))
-        .catch( (error) => console.log('Error writing new document: ' + error))
-      }
-    }
+    // for(const commit of push.commits) {
+    //   if (commit.distinct) {
+    //     db.collection('data').doc('github').collection('commits').doc(commit.id).set(
+    //       {
+    //         "_meta": {
+    //           "project": push.repository,
+    //           "user": commit.committer.username
+    //         },
+    //         "commitId": commit.id,
+    //         "commitMessage": commit.message,
+    //         "distinct": commit.distinct,
+    //         "time": commit.timestamp,
+    //         "modified" : commit.modified,
+    //         "removed": commit.removed,
+    //         "added": commit.added
+    //       }
+    //     ).then( () => console.log('Succesfully written new document'))
+    //     .catch( (error) => console.log('Error writing new document: ' + error))
+    //   }
+    // }
 
     const dataBuffer = Buffer.from(JSON.stringify(push));
 
