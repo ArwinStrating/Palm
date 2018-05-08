@@ -9,7 +9,7 @@
 
 steps:
   # Decrypt the config before building the image
-   - name: gcr.io/cloud-builders/gcloud
+  - name: gcr.io/cloud-builders/gcloud
     args:
       - kms
       - decrypt
