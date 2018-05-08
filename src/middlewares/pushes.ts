@@ -8,7 +8,9 @@ import { db } from '../db';
 import * as PubSub from '@google-cloud/pubsub';
 
 // Creates a client
-const pubsub = new PubSub();
+const pubsub = new PubSub({
+  projectId: 'm4m-code-heroes-dev'
+});
 const topicName = 'github-events';
 
 export function pushes(req, res, next) {
