@@ -31,6 +31,7 @@ export function pushes(req, res, next) {
         commits.push(c);
     }
     push.repository = req.body.repository.name;
+    push.author = req.body.pusher.name;
     push.commits = commits;
 
     for(const commit of push.commits) {
