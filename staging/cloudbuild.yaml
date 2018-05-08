@@ -33,6 +33,17 @@ steps:
       - name: 'config'
         path: /config
 
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - kms
+      - decrypt
+      - --ciphertext-file=config.json.enc
+      - --plaintext-file=config.json
+      - --location=global
+      - --keyring=keyring
+      - --key=config-key
+
+
   # Generate a kubeconfig file for the given GKE cluster.
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
