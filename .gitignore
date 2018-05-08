@@ -2,7 +2,7 @@
 # Created by https://www.gitignore.io/api/node
 
 lib
-src/config.json
+config.json
 
 ### Node ###
 # Logs
