@@ -3,12 +3,13 @@ import * as bodyParser from 'body-parser';
 
 import { issues } from './middlewares/issues';
 import { pushes } from './middlewares/pushes';
+import { pullrequests } from './middlewares/pullrequests';
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use(issues, pushes,
+app.use(issues, pushes, pullrequests,
   function (req, res, next) {
     res.status(200).end();
   }
