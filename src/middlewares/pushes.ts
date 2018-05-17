@@ -15,6 +15,7 @@ const topicName = 'github-events';
 
 export function pushes(req, res, next) {
   if (req.headers['x-github-event'] == 'push') {
+    console.log('Request body: ' + req.body);
     let push: Push = new Push();
     let commits: Commit[] = [];
     for (let commit of req.body.commits) {

@@ -41,15 +41,15 @@ export function pullrequests(req, res, next) {
         const dataBuffer = Buffer.from(JSON.stringify(pullRequest));
 
         pubsub
-        .topic(topicName)
-        .publisher()
-        .publish(dataBuffer)
-        .then(messageId => {
-            console.log(`Message ${messageId} published.`);
-        })
-        .catch(err => {
-            console.error('ERROR:', err);
-        });
+            .topic(topicName)
+            .publisher()
+            .publish(dataBuffer)
+            .then(messageId => {
+                console.log(`Message ${messageId} published.`);
+            })
+            .catch(err => {
+                console.error('ERROR:', err);
+            });
     }
     // res.send(pullRequest); 
     next();
