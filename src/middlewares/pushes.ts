@@ -18,18 +18,20 @@ export function pushes(req, res, next) {
     console.log('Request body: ' + JSON.stringify(req.body));
     let push: Push = new Push();
     let commits: Commit[] = [];
-    for (let commit of req.body.commits) {
-        let c = new Commit.Builder(commit.id)
-          .withMessage(commit.message)
-          .withModified(commit.modified)
-          .withCommitter(commit.committer)
-          .withDistinct(commit.distinct)
-          .withTimestamp(commit.timestamp)
-          .withRemoved(commit.removed)
-          .withAdded(commit.added)
-          .build();
+    if (req.body.commits) {
+      for (let commit of req.body.commits) {
+          let c = new Commit.Builder(commit.id)
+            .withMessage(commit.message)
+            .withModified(commit.modified)
+            .withCommitter(commit.committer)
+            .withDistinct(commit.distinct)
+            .withTimestamp(commit.timestamp)
+            .withRemoved(commit.removed)
+            .withAdded(commit.added)
+            .build();
 
-        commits.push(c);
+          commits.push(c);
+      }
     }
     push.repository = req.body.repository.name;
     push.author = req.body.pusher.name;

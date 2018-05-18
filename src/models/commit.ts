@@ -6,19 +6,19 @@ export class Commit {
     committer: Committer;
     distinct: boolean;
     timestamp: Date;
-    modified: string[] = [];
-    added: string[] = [];
-    removed: string[] = [];
+    modified: string[];
+    added: string[];
+    removed: string[];
 
     constructor(commit?: Commit) {
         this.id = commit.id;
         this.committer = commit.committer;
         this.timestamp = commit.timestamp;
         this.distinct = commit.distinct;
-        this.added = commit.added;
+        this.added = commit.added || [];
         this.message = commit.message;
-        this.modified = commit.modified;
-        this.removed = commit.removed;
+        this.modified = commit.modified || [];
+        this.removed = commit.removed || [];
     }
 
     static get Builder() {
