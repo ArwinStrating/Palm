@@ -20,6 +20,10 @@ export function pushes(req, res, next) {
     let commits: Commit[] = [];
     if (req.body.commits) {
       for (let commit of req.body.commits) {
+          commit.committer.username  = commit.committer.username 
+            ? commit.committer.username 
+            : req.body.pusher.name
+
           let c = new Commit.Builder(commit.id)
             .withMessage(commit.message)
             .withModified(commit.modified)
@@ -47,7 +51,6 @@ export function pushes(req, res, next) {
             },
             "commitId": commit.id,
             "commitMessage": commit.message,
-            "distinct": commit.distinct,
             "time": commit.timestamp,
             "modified" : commit.modified,
             "removed": commit.removed,
