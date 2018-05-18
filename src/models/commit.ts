@@ -6,9 +6,9 @@ export class Commit {
     committer: Committer;
     distinct: boolean;
     timestamp: Date;
-    modified: string[];
-    added: string[];
-    removed: string[];
+    modified: string[] = [];
+    added: string[] = [];
+    removed: string[] = [];
 
     constructor(commit?: Commit) {
         this.id = commit.id;
