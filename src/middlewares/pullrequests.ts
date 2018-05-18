@@ -15,6 +15,7 @@ const topicName = 'github-events';
 
 export function pullrequests(req, res, next) {
   if (req.headers['x-github-event'] == 'pull_request') {
+      console.log(req.body);
     if(req.body.action === 'opened' || req.body.action === 'closed') {
         let pullRequest: PullRequest = new PullRequest();
         pullRequest.id = req.body.pull_request.id;
@@ -23,6 +24,8 @@ export function pullrequests(req, res, next) {
         pullRequest.author = req.body.pull_request.user.login;
         pullRequest.action = req.body.action;
         pullRequest.createdAt = req.body.pull_request.created_at;
+
+        console.log('Request body: ' + JSON.stringify(pullRequest));
 
         db.collection('data').doc('github').collection('pull_requests').doc(`${pullRequest.id}`).set(
             {

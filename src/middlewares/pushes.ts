@@ -15,7 +15,6 @@ const topicName = 'github-events';
 
 export function pushes(req, res, next) {
   if (req.headers['x-github-event'] == 'push') {
-    console.log('Request body: ' + JSON.stringify(req.body));
     let push: Push = new Push();
     let commits: Commit[] = [];
     if (req.body.commits) {
@@ -40,6 +39,8 @@ export function pushes(req, res, next) {
     push.repository = req.body.repository.name;
     push.author = req.body.pusher.name;
     push.commits = commits;
+
+    console.log('Request body: ' + JSON.stringify(push));
 
     for(const commit of push.commits) {
       if (commit.distinct) {
