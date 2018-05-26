@@ -4,6 +4,7 @@ import { Push } from '../models/push';
 import { Commit } from '../models/commit';
 
 import { db } from '../db';
+import { retrieveUser } from '../helpers/name-retriever'
 
 import * as PubSub from '@google-cloud/pubsub';
 
@@ -13,26 +14,38 @@ const pubsub = new PubSub({
 });
 const topicName = 'github-events';
 
-export function pushes(req, res, next) {
+export async function pushes(req, res, next) {
   if (req.headers['x-github-event'] == 'push') {
     let push: Push = new Push();
     let commits: Commit[] = [];
-    for (let commit of req.body.commits) {
-        let c = new Commit.Builder(commit.id)
-          .withMessage(commit.message)
-          .withModified(commit.modified)
-          .withCommitter(commit.committer)
-          .withDistinct(commit.distinct)
-          .withTimestamp(commit.timestamp)
-          .withRemoved(commit.removed)
-          .withAdded(commit.added)
-          .build();
+    if (req.body.commits) {
+      for (let commit of req.body.commits) {
+          commit.committer.username  = commit.committer.username 
+            ? commit.committer.username 
+            : req.body.pusher.name
 
-        commits.push(c);
+          let c = new Commit.Builder(commit.id)
+            .withMessage(commit.message)
+            .withModified(commit.modified)
+            .withCommitter(commit.committer)
+            .withDistinct(commit.distinct)
+            .withTimestamp(commit.timestamp)
+            .withRemoved(commit.removed)
+            .withAdded(commit.added)
+            .build();
+
+          commits.push(c);
+      }
     }
     push.repository = req.body.repository.name;
     push.author = req.body.pusher.name;
     push.commits = commits;
+
+    const userRef = await retrieveUser(push.author, 'github')
+
+    push.userRef = userRef;
+
+    console.log(JSON.stringify(push));    
 
     for(const commit of push.commits) {
       if (commit.distinct) {
@@ -42,9 +55,9 @@ export function pushes(req, res, next) {
               "project": push.repository,
               "user": commit.committer.username
             },
+            "user": userRef,
             "commitId": commit.id,
             "commitMessage": commit.message,
-            "distinct": commit.distinct,
             "time": commit.timestamp,
             "modified" : commit.modified,
             "removed": commit.removed,
