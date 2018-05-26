@@ -4,6 +4,7 @@ import { PullRequest } from '../models/pullrequest';
 import { Commit } from '../models/commit';
 
 import { db } from '../db';
+import { retrieveUser } from '../helpers/name-retriever'
 
 import * as PubSub from '@google-cloud/pubsub';
 
@@ -13,9 +14,8 @@ const pubsub = new PubSub({
 });
 const topicName = 'github-events';
 
-export function pullrequests(req, res, next) {
+export async function pullrequests(req, res, next) {
   if (req.headers['x-github-event'] == 'pull_request') {
-      console.log(req.body);
     if(req.body.action === 'opened' || req.body.action === 'closed') {
         let pullRequest: PullRequest = new PullRequest();
         pullRequest.id = req.body.pull_request.id;
@@ -25,7 +25,11 @@ export function pullrequests(req, res, next) {
         pullRequest.action = req.body.action;
         pullRequest.createdAt = req.body.pull_request.created_at;
 
-        console.log('Request body: ' + JSON.stringify(pullRequest));
+        const userRef = await retrieveUser(pullRequest.author, 'github')
+
+        pullRequest.userRef = userRef;
+
+        console.log(pullRequest);
 
         db.collection('data').doc('github').collection('pull_requests').doc(`${pullRequest.id}`).set(
             {

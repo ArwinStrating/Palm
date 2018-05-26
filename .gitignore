@@ -3,6 +3,7 @@
 
 lib
 config.json
+seed_users.ts
 
 ### Node ###
 # Logs

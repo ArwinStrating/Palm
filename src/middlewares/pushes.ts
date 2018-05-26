@@ -4,6 +4,7 @@ import { Push } from '../models/push';
 import { Commit } from '../models/commit';
 
 import { db } from '../db';
+import { retrieveUser } from '../helpers/name-retriever'
 
 import * as PubSub from '@google-cloud/pubsub';
 
@@ -13,7 +14,7 @@ const pubsub = new PubSub({
 });
 const topicName = 'github-events';
 
-export function pushes(req, res, next) {
+export async function pushes(req, res, next) {
   if (req.headers['x-github-event'] == 'push') {
     let push: Push = new Push();
     let commits: Commit[] = [];
@@ -40,7 +41,11 @@ export function pushes(req, res, next) {
     push.author = req.body.pusher.name;
     push.commits = commits;
 
-    console.log('Request body: ' + JSON.stringify(push));
+    const userRef = await retrieveUser(push.author, 'github')
+
+    push.userRef = userRef;
+
+    console.log(push);    
 
     for(const commit of push.commits) {
       if (commit.distinct) {
@@ -50,6 +55,7 @@ export function pushes(req, res, next) {
               "project": push.repository,
               "user": commit.committer.username
             },
+            "user": userRef,
             "commitId": commit.id,
             "commitMessage": commit.message,
             "time": commit.timestamp,
