@@ -29,7 +29,7 @@ export async function pullrequests(req, res, next) {
 
         pullRequest.userRef = userRef;
 
-        console.log(pullRequest);
+        console.log(JSON.stringify(pullRequest));
 
         db.collection('data').doc('github').collection('pull_requests').doc(`${pullRequest.id}`).set(
             {

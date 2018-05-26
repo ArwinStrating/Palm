@@ -45,7 +45,7 @@ export async function pushes(req, res, next) {
 
     push.userRef = userRef;
 
-    console.log(push);    
+    console.log(JSON.stringify(push));    
 
     for(const commit of push.commits) {
       if (commit.distinct) {
