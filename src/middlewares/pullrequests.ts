@@ -48,7 +48,7 @@ export async function pullrequests(req, res, next) {
 
         const activity: Activity = new Activity();
         activity.id = pullRequest.id;
-        activity.timestamp = Date.now();
+        activity.timestamp = new Date().toISOString();
         activity.message = pullRequest.title;
         activity.eventData = pullRequest;
         activity.user = userRef;

@@ -1,6 +1,6 @@
 export class Activity {
     id: number;
-    timestamp: number;
+    timestamp: string;
     message: string;
     user?: string;
     repo?: string;
