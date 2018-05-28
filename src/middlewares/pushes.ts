@@ -2,6 +2,7 @@ import * as moment from 'moment';
 
 import { Push } from '../models/push';
 import { Commit } from '../models/commit';
+import { Activity } from '../models/activity';
 
 import { db } from '../db';
 import { retrieveUser } from '../helpers/name-retriever'
@@ -68,7 +69,16 @@ export async function pushes(req, res, next) {
       }
     }
 
-    const dataBuffer = Buffer.from(JSON.stringify(push));
+    const activity: Activity = new Activity();
+    activity.id = req.body.after;
+    activity.timestamp = new Date().toISOString();
+    activity.eventData = push;
+    activity.user = userRef;
+    activity.repo = push.repository;
+
+    console.log(JSON.stringify(activity))
+
+    const dataBuffer = Buffer.from(JSON.stringify(activity));
 
     pubsub
       .topic(topicName)

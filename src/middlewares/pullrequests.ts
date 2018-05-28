@@ -2,6 +2,7 @@ import * as moment from 'moment';
 
 import { PullRequest } from '../models/pullrequest';
 import { Commit } from '../models/commit';
+import { Activity } from '../models/activity';
 
 import { db } from '../db';
 import { retrieveUser } from '../helpers/name-retriever'
@@ -45,7 +46,16 @@ export async function pullrequests(req, res, next) {
         ).then( () => console.log('Succesfully written new document'))
         .catch( (error) => console.log('Error writing new document: ' + error));
 
-        const dataBuffer = Buffer.from(JSON.stringify(pullRequest));
+        const activity: Activity = new Activity();
+        activity.id = pullRequest.id;
+        activity.timestamp = new Date().toISOString();
+        activity.eventData = pullRequest;
+        activity.user = userRef;
+        activity.repo = pullRequest.repository;
+    
+        console.log(JSON.stringify(activity))
+
+        const dataBuffer = Buffer.from(JSON.stringify(activity));
 
         pubsub
             .topic(topicName)
