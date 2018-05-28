@@ -5,6 +5,6 @@ export class PullRequest {
     title: string;
     event: string = 'pull_request';
     action: string;
-    author: string;
+    authorName: string;
     createdAt: string;
 }

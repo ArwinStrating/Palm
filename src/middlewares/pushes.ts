@@ -39,10 +39,10 @@ export async function pushes(req, res, next) {
       }
     }
     push.repository = req.body.repository.name;
-    push.author = req.body.pusher.name;
+    push.authorName = req.body.pusher.name;
     push.commits = commits;
 
-    const userRef = await retrieveUser(push.author, 'github')
+    const userRef = await retrieveUser(push.authorName, 'github')
 
     push.userRef = userRef;
 

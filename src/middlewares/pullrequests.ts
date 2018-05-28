@@ -22,11 +22,11 @@ export async function pullrequests(req, res, next) {
         pullRequest.id = req.body.pull_request.id;
         pullRequest.repository = req.body.repository.name;
         pullRequest.title = req.body.pull_request.title;    
-        pullRequest.author = req.body.pull_request.user.login;
+        pullRequest.authorName = req.body.pull_request.user.login;
         pullRequest.action = req.body.action;
         pullRequest.createdAt = req.body.pull_request.created_at;
 
-        const userRef = await retrieveUser(pullRequest.author, 'github')
+        const userRef = await retrieveUser(pullRequest.authorName, 'github')
 
         pullRequest.userRef = userRef;
 
@@ -36,7 +36,7 @@ export async function pullrequests(req, res, next) {
             {
                 "_meta": {
                     "project": pullRequest.repository,
-                    "user": pullRequest.author
+                    "user": pullRequest.authorName
                 },
                 "id": pullRequest.id,
                 "createdAt": pullRequest.createdAt,

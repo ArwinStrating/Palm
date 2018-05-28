@@ -4,6 +4,6 @@ export class Push {
     repository: string;
     event: string = 'push';
     userRef: string;
-    author: string;
+    authorName: string;
     commits: Commit[]; 
 }
