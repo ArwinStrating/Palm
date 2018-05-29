@@ -38,7 +38,7 @@ export async function pushes(req, res, next) {
           commits.push(c);
       }
     }
-    push.repository = req.body.repository.name;
+    push.repository = req.body.repository.full_name;
     push.authorName = req.body.pusher.name;
     push.commits = commits;
 

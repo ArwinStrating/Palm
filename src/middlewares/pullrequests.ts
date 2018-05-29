@@ -20,7 +20,7 @@ export async function pullrequests(req, res, next) {
     if(req.body.action === 'opened' || req.body.action === 'closed') {
         let pullRequest: PullRequest = new PullRequest();
         pullRequest.id = req.body.pull_request.id;
-        pullRequest.repository = req.body.repository.name;
+        pullRequest.repository = req.body.repository.full_name;
         pullRequest.title = req.body.pull_request.title;    
         pullRequest.authorName = req.body.pull_request.user.login;
         pullRequest.action = req.body.action;
