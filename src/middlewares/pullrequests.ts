@@ -41,7 +41,8 @@ export async function pullrequests(req, res, next) {
                 "id": pullRequest.id,
                 "createdAt": pullRequest.createdAt,
                 "action": pullRequest.action,
-                "title": pullRequest.title
+                "title": pullRequest.title,
+                "user": userRef
             }
         ).then( () => console.log('Succesfully written new document'))
         .catch( (error) => console.log('Error writing new document: ' + error));
