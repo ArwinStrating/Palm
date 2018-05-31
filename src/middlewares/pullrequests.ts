@@ -23,7 +23,7 @@ export async function pullrequests(req, res, next) {
         pullRequest.repository = req.body.repository.full_name;
         pullRequest.title = req.body.pull_request.title;    
         pullRequest.authorName = req.body.pull_request.user.login;
-        if (req.body.action === 'closed' && req.body.merged) {
+        if (req.body.action === 'closed' && req.body.pull_request.merged) {
             pullRequest.action = 'merged';
         } else {
             pullRequest.action = req.body.action;
