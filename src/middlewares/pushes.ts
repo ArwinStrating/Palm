@@ -72,7 +72,7 @@ export async function pushes(req, res, next) {
     const activity: Activity = new Activity();
     activity.id = req.body.after;
     activity.timestamp = new Date().toISOString();
-    activity.message = req.body.head_commit.message;
+    activity.message = req.body.head_commit ? req.body.head_commit.message : 'No message';
     activity.eventData = push;
     activity.user = userRef;
     activity.repo = push.repository;
