@@ -4,12 +4,13 @@ import * as bodyParser from 'body-parser';
 import { issues } from './middlewares/issues';
 import { pushes } from './middlewares/pushes';
 import { pullrequests } from './middlewares/pullrequests';
+import { deletes } from './middlewares/deletes';
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use(issues, pushes, pullrequests,
+app.use(issues, pushes, pullrequests, deletes,
   function (req, res, next) {
     res.status(200).end();
   }

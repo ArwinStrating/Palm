@@ -16,7 +16,7 @@ const pubsub = new PubSub({
 const topicName = 'github-events';
 
 export async function pushes(req, res, next) {
-  if (req.headers['x-github-event'] == 'push') {
+  if (req.headers['x-github-event'] == 'push' && req.body.head_commit) {
     let push: Push = new Push();
     let commits: Commit[] = [];
     if (req.body.commits) {
