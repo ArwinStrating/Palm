@@ -23,7 +23,11 @@ export async function pullrequests(req, res, next) {
         pullRequest.repository = req.body.repository.full_name;
         pullRequest.title = req.body.pull_request.title;    
         pullRequest.authorName = req.body.pull_request.user.login;
-        pullRequest.action = req.body.action;
+        if (req.body.action === 'closed' && req.body.merged) {
+            pullRequest.action = 'merged';
+        } else {
+            pullRequest.action = req.body.action;
+        }
         pullRequest.createdAt = req.body.pull_request.created_at;
 
         const userRef = await retrieveUser(pullRequest.authorName, 'github')
